@@ -1,0 +1,52 @@
+NAME = fractol
+
+LIBFT_PATH = libft_printf
+LIBFT = libftprintf.a
+MLX_PATH = mlx
+MLX = libmlx.a
+
+SRC_FILES = ft_fractol.c \
+			ft_mandelbrot.c \
+			ft_julia.c \
+			ft_calculate_and_print.c \
+			ft_error.c \
+			ft_hooks.c \
+			ft_text.c \
+			ft_burning_ship.c \
+			
+SRC_DIR = srcs/
+SRC = ${addprefix ${SRC_DIR}, ${SRC_FILES}}
+OBJ = ${SRC:.c=.o}
+
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -pg -g
+AR = ar -rcs
+
+%.o: %.c
+	${CC} -c -Imlx -c $< -o $@
+	
+all: ${NAME}
+
+libx:
+	@MAKE -sC ${MLX_PATH}
+
+libf:
+	@MAKE -sC ${LIBFT_PATH}
+
+${NAME}: libx libf ${OBJ}
+	${CC} -framework OpenGL -framework AppKit ${LIBFT_PATH}/${LIBFT} ${OBJ} ${MLX_PATH}/${MLX} -o ${NAME}
+
+clean:
+	rm -f ${OBJ}
+	${MAKE} -C ${LIBFT_PATH} clean
+	${MAKE} -C ${MLX_PATH} clean
+
+fclean: clean
+	rm -f ${NAME}
+	${MAKE} -C ${LIBFT_PATH} fclean
+	${MAKE} -C ${MLX_PATH} clean
+	rm -f ${MLX_PATH}/${MLX}
+
+re: fclean all
+
+.PHONY: all clean flcean re
