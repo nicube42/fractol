@@ -6,6 +6,8 @@ OBJ_DIR			=	objs
 LIBFT_DIR		=	libft
 PRINTF_DIR		=	ft_printf
 
+HEADER = includes
+
 SRC_FILES		=	$(LIBFT_FILES) \
 					$(FT_PRINTF_FILES) \
 
@@ -58,7 +60,7 @@ DEPS			=	$(OBJS:.o=.d)
 CC				=	gcc
 RM				=	rm -rf
 CFLAGS			=	-Wall -Werror -Wextra
-IFLAGS			=	-I $(HDR_DIR)
+IFLAGS			=	-I $(HEADER)
 DFLAGS			=	-MMD -MP -O1
 
 .PHONY: all clean fclean re

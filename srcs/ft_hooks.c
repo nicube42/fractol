@@ -32,8 +32,7 @@ int	ft_key_hook(int keycode, t_nest *nest)
 	}
 	else if (keycode == 53)
 	{
-		mlx_destroy_image(nest->frac.mlx, nest->img.img);
-		mlx_destroy_window(nest->frac.mlx, nest->frac.mlx_win);
+		ft_clean_exit(nest);
 		exit(0);
 	}
 	ft_key_hook_2(keycode, nest);

@@ -91,10 +91,11 @@ void	ft_init_ship(t_fractol *frac);
 void	ft_calculate_and_launch_ship(t_nest *nest);
 void	ft_ship_set(t_fractol *frac);
 
+void	ft_clean_exit(t_nest *nest);
 void	ft_error(t_nest *nest);
-int		ft_ok(void);
-void	ft_julia_text(void);
-void	ft_general_text(void);
+int		ft_ok(t_nest *nest);
+void	ft_julia_text(t_nest *nest);
+void	ft_general_text(t_nest *nest);
 
 void	ft_text(t_nest *nest);
 

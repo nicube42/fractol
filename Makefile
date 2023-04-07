@@ -1,52 +1,47 @@
+PATH_SRC =			./srcs/
+PATH_LIBFT =		./libft_printf/
+PATH_MLX =			./mlx/
+PATH_OBJS =			./objs/
+
+MLX = $(PATH_MLX)libmlx.a
+LIBFT = $(PATH_LIBFT)libftprintf.a
 NAME = fractol
 
-LIBFT_PATH = libft_printf
-LIBFT = libftprintf.a
-MLX_PATH = mlx
-MLX = libmlx.a
+FILES = $(PATH_SRC)ft_burning_ship.c $(PATH_SRC)ft_calculate_and_print.c $(PATH_SRC)ft_error.c $(PATH_SRC)ft_fractol.c $(PATH_SRC)ft_hooks.c\
+		$(PATH_SRC)ft_julia.c $(PATH_SRC)ft_mandelbrot.c $(PATH_SRC)ft_text.c
+OBJS = $(patsubst $(PATH_SRC)%.c, $(PATH_OBJS)%.o, $(FILES))
 
-SRC_FILES = ft_fractol.c \
-			ft_mandelbrot.c \
-			ft_julia.c \
-			ft_calculate_and_print.c \
-			ft_error.c \
-			ft_hooks.c \
-			ft_text.c \
-			ft_burning_ship.c \
-			
-SRC_DIR = srcs/
-SRC = ${addprefix ${SRC_DIR}, ${SRC_FILES}}
-OBJ = ${SRC:.c=.o}
+CC = clang
+CFLAGS = -Wextra -Werror -Wall
+MLXFLAGS = -Lmlx -lmlx -framework OpenGL -framework AppKit
+RM = rm -rf
 
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -pg -g
-AR = ar -rcs
+all: $(NAME)
 
-%.o: %.c
-	${CC} -c -Imlx -c $< -o $@
-	
-all: ${NAME}
+$(NAME): $(OBJS)
+	@echo objects done!!
+	@$(MAKE) -C $(PATH_MLX)
+	@$(MAKE) -C $(PATH_LIBFT)
+	@$(CC) $(CFLAGS) $(MLXFLAGS) $(OBJS) $(MLX) $(LIBFT) -o $(NAME)
+	@echo program done!
 
-libx:
-	@MAKE -sC ${MLX_PATH}
-
-libf:
-	@MAKE -sC ${LIBFT_PATH}
-
-${NAME}: libx libf ${OBJ}
-	${CC} -framework OpenGL -framework AppKit ${LIBFT_PATH}/${LIBFT} ${OBJ} ${MLX_PATH}/${MLX} -o ${NAME}
+$(PATH_OBJS)%.o:	$(PATH_SRC)%.c
+	@mkdir -p $(PATH_OBJS)
+	$(CC) $(CFLAGS) -Imlx -c $< -o $@
 
 clean:
-	rm -f ${OBJ}
-	${MAKE} -C ${LIBFT_PATH} clean
-	${MAKE} -C ${MLX_PATH} clean
+	$(RM) $(PATH_OBJS)
+	@echo obj removed!
 
 fclean: clean
-	rm -f ${NAME}
-	${MAKE} -C ${LIBFT_PATH} fclean
-	${MAKE} -C ${MLX_PATH} clean
-	rm -f ${MLX_PATH}/${MLX}
+	make clean -C $(PATH_MLX)
+	make fclean -C $(PATH_LIBFT)
+	$(RM) $(NAME)
+	@echo clean everything
 
 re: fclean all
 
-.PHONY: all clean flcean re
+norme: 
+	norminette $(PATH_SRC) $(PATH_LIBFT) ./includes
+
+.PHONY: re all fclean clean

@@ -12,20 +12,31 @@
 
 #include "../includes/ft_fractol.h"
 
+void	ft_clean_exit(t_nest *nest)
+{
+	if (nest->img.img)
+		mlx_destroy_image(nest->frac.mlx, nest->img.img);
+	if (nest->frac.mlx_win)
+		mlx_destroy_window(nest->frac.mlx, nest->frac.mlx_win);
+}
+
 void	ft_error(t_nest *nest)
-{	
+{
+	(void) nest;
 	ft_printf("\nerror\n");
 	exit(1);
 }
 
-int	ft_ok(void)
+int	ft_ok(t_nest *nest)
 {
+	ft_clean_exit(nest);
 	exit(0);
 	return (0);
 }
 
-void	ft_julia_text(void)
+void	ft_julia_text(t_nest *nest)
 {
+	(void) nest;
 	ft_printf("Dans le cas de l'ensemble de Julia, il faut egalement ");
 	ft_printf("ajouter deux chiffres \n");
 	ft_printf("en 2eme et 3eme argument. \nExemples notables : ");
@@ -34,8 +45,9 @@ void	ft_julia_text(void)
 	exit(1);
 }
 
-void	ft_general_text(void)
+void	ft_general_text(t_nest *nest)
 {
+	(void) nest;
 	ft_printf("Selectionner la fractale de Mandelbrot, de Julia ou ");
 	ft_printf("Burning Ship en \n");
 	ft_printf("entrant respectivement 1 ou 2 ou 3 en premier ");

@@ -37,14 +37,14 @@ void	ft_select_fractal(t_nest *nest, int argc, char **argv)
 			ft_julia_set(&nest->frac);
 		}
 		else if (!ft_strncmp("2", argv[1], 1))
-			ft_julia_text();
+			ft_julia_text(nest);
 		else if (!ft_strncmp("3", argv[1], 1) && argc == 2)
 			ft_ship_set(&nest->frac);
 		else
-			ft_general_text();
+			ft_general_text(nest);
 	}
 	else
-		ft_general_text();
+		ft_general_text(nest);
 }
 
 int	main(int argc, char **argv)

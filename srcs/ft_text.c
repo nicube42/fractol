@@ -14,6 +14,9 @@
 
 void	ft_text(t_nest *nest)
 {
+	char	*iter;
+
+	iter = ft_itoa(nest->frac.max_iter);
 	mlx_string_put(nest->frac.mlx, nest->frac.mlx_win, 10, 30,
 		0xC0C0C0, "C = change color");
 	mlx_string_put(nest->frac.mlx, nest->frac.mlx_win, 10, 50,
@@ -23,7 +26,8 @@ void	ft_text(t_nest *nest)
 	mlx_string_put(nest->frac.mlx, nest->frac.mlx_win, 10, 90,
 		0xC0C0C0, "Max iteration = ");
 	mlx_string_put(nest->frac.mlx, nest->frac.mlx_win, 120, 90,
-		0xC0C0C0, ft_itoa(nest->frac.max_iter));
+		0xC0C0C0, iter);
+	free (iter);
 	mlx_string_put(nest->frac.mlx, nest->frac.mlx_win, 10, 110,
 		0xC0C0C0, "Q = Reduce iteration of 10");
 	mlx_string_put(nest->frac.mlx, nest->frac.mlx_win, 10, 130,
