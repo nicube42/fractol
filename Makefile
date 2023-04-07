@@ -44,4 +44,4 @@ re: fclean all
 norme: 
 	norminette $(PATH_SRC) $(PATH_LIBFT) ./includes
 
-.PHONY: re all fclean clean
+.PHONY: re all fclean clean norme
